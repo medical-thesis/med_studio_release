@@ -1,0 +1,59 @@
+Question,Context Relevance,Answer Relevance,Diversity,Answer Length,Ground Truth Length
+What is (are) Breast Cancer ?,0.7256744503974915,0.7070590257644653,0.5532994923857868,197,68
+What are the symptoms of Genochondromatosis ?,0.8166038393974304,0.8127896785736084,0.7435897435897436,39,244
+What causes Pars planitis ?,0.8683297038078308,0.8327603340148926,0.8421052631578947,76,107
+What are the genetic changes related to genitopatellar syndrome ?,0.8599802255630493,0.6726462244987488,0.8412698412698413,63,157
+What are the treatments for Pseudopelade of Brocq ?,0.8054020404815674,0.8596221208572388,0.6764705882352942,68,102
+What is (are) Preauricular sinus ?,0.9106146097183228,0.6315213441848755,0.7521367521367521,117,121
+How many people are affected by capillary malformation-arteriovenous malformation syndrome ?,0.7607032060623169,0.8990116119384766,1.0,14,26
+What is (are) Drug Reactions ?,0.8114567399024963,0.5312613248825073,0.810126582278481,79,205
+What is (are) Ollier disease ?,0.8531635999679565,0.8268404603004456,0.75,84,90
+What causes ARDS ?,0.8568903207778931,0.7784477472305298,0.6770833333333334,96,101
+What is (are) carnitine-acylcarnitine translocase deficiency ?,0.9315983653068542,0.8072076439857483,0.7684210526315789,95,148
+How many people are affected by spondylocostal dysostosis ?,0.7777146100997925,0.8740288615226746,0.8846153846153846,26,12
+What is (are) Hearing Loss ?,0.7268598675727844,0.6469855308532715,0.6096256684491979,187,135
+What is (are) Age-related Macular Degeneration ?,0.7540037035942078,0.7700557112693787,0.6666666666666666,93,42
+What is (are) Benign Essential Blepharospasm ?,0.714922308921814,0.6322338581085205,0.8194444444444444,72,154
+What is (are) Pycnodysostosis ?,0.8007840514183044,0.7496470212936401,0.7586206896551724,58,118
+What are the treatments for Melanoma ?,0.0,0.0,0.0,0,2664
+What are the symptoms of Common variable immunodeficiency ?,0.8171566128730774,0.6100217700004578,0.7660818713450293,171,337
+What are the symptoms of Chronic atypical neutrophilic dermatosis with lipodystrophy and elevated temperature ?,0.713200032711029,0.6962342858314514,0.6815286624203821,157,404
+What is (are) Chronic Fatigue Syndrome ?,0.7968592643737793,0.6935849189758301,0.673469387755102,196,202
+What is (are) molybdenum cofactor deficiency ?,0.8287177681922913,0.7845987677574158,0.6384615384615384,260,159
+How to prevent COPD ?,0.8746634125709534,0.7469332218170166,0.8,65,475
+What causes Turner syndrome ?,0.8267523646354675,0.7743507623672485,0.6752136752136753,117,229
+What are the treatments for Chronic Neutrophilic Leukemia ?,0.7522532343864441,0.8350257873535156,0.9024390243902439,41,100
+What is (are) Familial stomach cancer ?,0.8904929757118225,0.8776159882545471,0.8,60,144
+Is inclusion body myopathy with early-onset Paget disease and frontotemporal dementia inherited ?,0.8075529336929321,0.9209302663803101,0.8301886792452831,53,61
+What are the treatments for Anxiety Disorders ?,0.8409348726272583,0.7848654389381409,0.696551724137931,145,102
+What causes Merkel cell carcinoma ?,0.8099825382232666,0.734756350517273,0.5892857142857143,112,132
+What is (are) Pigment-dispersion syndrome ?,0.9840751886367798,0.71501624584198,0.6181818181818182,220,220
+What are the symptoms of Dent disease 1 ?,0.7931301593780518,0.7340991497039795,0.7299270072992701,137,323
+What are the treatments for acute promyelocytic leukemia ?,0.546283483505249,0.7059959769248962,0.7111111111111111,90,98
+What are the genetic changes related to Buschke-Ollendorff syndrome ?,0.8209407925605774,0.7874218821525574,0.5957446808510638,188,133
+What are the genetic changes related to microphthalmia with linear skin defects syndrome ?,0.8393830060958862,0.8445501327514648,0.8113207547169812,53,214
+Is benign essential blepharospasm inherited ?,0.733697772026062,0.8642829656600952,0.8076923076923077,52,83
+What are the genetic changes related to REN-related kidney disease ?,0.8883193731307983,0.7723594307899475,0.651685393258427,89,79
+what research (or clinical trials) is being done for Olivopontocerebellar Atrophy ?,0.8308581113815308,0.8936058282852173,0.8285714285714286,70,55
+How many people are affected by adenosine monophosphate deaminase deficiency ?,0.7308802008628845,0.7396111488342285,0.7714285714285715,35,47
+What are the treatments for Glucose-6-phosphate dehydrogenase deficiency ?,0.7924274206161499,0.6376925706863403,0.7865168539325843,89,99
+What are the genetic changes related to myoclonus-dystonia ?,0.9008446931838989,0.601712703704834,0.6338028169014085,142,129
+What are the symptoms of Northern epilepsy ?,0.6477208137512207,0.7002521753311157,0.6473029045643154,241,269
+Is Alpers-Huttenlocher syndrome inherited ?,0.8241475820541382,0.8810381293296814,0.76,50,51
+What is the outlook for Oropharyngeal Cancer ?,0.9264023900032043,0.7836284041404724,0.5384615384615384,195,160
+How to diagnose COACH syndrome ?,0.8103346228599548,0.8035964369773865,0.7922077922077922,77,61
+What is (are) Polycythemia Vera ?,0.9227138757705688,0.6731767654418945,0.6818181818181818,198,408
+What to do for What I need to know about Kidney Stones ?,0.8712514638900757,0.7316875457763672,0.6083916083916084,143,255
+what research (or clinical trials) is being done for Von Hippel-Lindau Disease (VHL) ?,0.04309901222586632,0.0997457280755043,1.0,10,190
+What are the treatments for Hailey-Hailey disease ?,0.8408353924751282,0.8667995929718018,0.7672413793103449,116,154
+What are the genetic changes related to cap myopathy ?,0.6565536856651306,0.7066686153411865,1.0,11,232
+What are the treatments for Glaucoma ?,0.8761440515518188,0.7286784648895264,0.5869565217391305,184,314
+What are the symptoms of Myelofibrosis ?,0.8038807511329651,0.7404117584228516,0.9230769230769231,26,230
+=====
+Điểm trung bình các metrics:
+Context Relevance        0.780344
+Answer Relevance         0.730061
+Diversity                0.729163
+Answer Length          103.140000
+Ground Truth Length    212.860000
+dtype: float64
