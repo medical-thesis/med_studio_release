@@ -64,5 +64,5 @@ system/src/interface/draft_manuscript_v2.pdf
 system/src/core/config/.env
 
 
-storage
+# storage
 system
