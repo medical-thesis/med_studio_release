@@ -67,4 +67,5 @@ system/src/core/config/.env
 # storage
 # system
 
-system/src
+# system/src
+system\src\core

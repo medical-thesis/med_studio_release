@@ -1,0 +1,2 @@
+# Only stores constants
+
