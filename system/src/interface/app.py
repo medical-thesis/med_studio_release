@@ -20,10 +20,10 @@ from system.src.interface.components import chat_with_image, home, medical_vqa, 
 # import message
 # import query
 
-st.set_page_config(page_title="Custom Multi-page App", layout="wide")
+st.set_page_config(page_title="MedStudio - Comprehensive Intelligent Medical Platform", layout="wide")
 
 # Custom sidebar navigation
-st.sidebar.title("📁 Navigation")
+st.sidebar.title("📬🧬 MedStudio")
 page = st.sidebar.radio("Go to", ["🏠 Home", "💬 Message", "💬 Basic message", "🔍 Medical retrieval", "🌐 Medical translate", "💬 Message with image", "🎰 Medical VQA", "💊 Drug discovery", "🩺 Medical search"])
 
 # Function to load and apply CSS
