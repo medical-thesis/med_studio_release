@@ -7,7 +7,6 @@ import sys
 from dotenv import load_dotenv
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
-# === fix import module
 project_root = os.getenv("PROJECT_ROOT")
 
 if project_root not in sys.path:

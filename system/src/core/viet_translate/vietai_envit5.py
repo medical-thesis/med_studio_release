@@ -1,5 +1,4 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-# from deep_translator import GoogleTranslator, ChatGptTranslator
 from typing import Literal, List
 
 class VietaiEnviT5Translator():
@@ -51,7 +50,6 @@ class VietaiEnviT5Translator():
 
         return translated_text
 
-    # need prefix for en: and vi: sentences
     def translate_with_prefix(self, text: str, src_lang: Literal["en", "vi"]) -> str:
         if src_lang == "en": text = "en: " + text
         elif src_lang == "vi": text = "vi: " + text

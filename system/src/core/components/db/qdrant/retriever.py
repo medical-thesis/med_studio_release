@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv("system/core/src/config/.env")
 
 
-# === fix import module
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
 project_root = os.getenv("PROJECT_ROOT")
@@ -26,7 +25,6 @@ class QdrantRetriever:
         self.outputs = []
         self.embedding = Embedding(embedding_model_name=EMBEDDING_MODEL)
         
-        # temporary
         self.client = QdrantManager(
             embedding=self.embedding,
             url=self.QDRANT_URL,
@@ -85,4 +83,3 @@ if __name__ == "__main__":
     query = "How to prevent Hearing Loss?"
 
     qdrant_retriever.handle_query(query=query)
-    # list_retriever.print_dict()

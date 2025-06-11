@@ -36,7 +36,6 @@ class SemanticRouter:
                 examples = [item.strip() for item in file.readlines()]
                 print(route)
                 print(len(examples))
-                # print(remove_duplicates(examples))
                 intent[route] = self.remove_duplicates(examples)
                 print(len(self.remove_duplicates(examples)))
                 print()
@@ -51,11 +50,9 @@ class SemanticRouter:
         self.reference_embeddings = {}
         for intent, examples in intents.items():
             print('intent: ', intent)
-            # print('examples: ', examples)
             embeddings = self.embed_model.encode(examples)
             self.reference_embeddings[intent] = np.mean(embeddings, axis=0)
         print()
-        # print("reference_embeddings: ", self.reference_embeddings)
 
     def route_query(self, query):
         query_embedding = self.embed_model.encode([query])[0]
@@ -73,7 +70,6 @@ class SemanticRouter:
 
 
 if __name__ == "__main__":
-    # test code
     semanticRouter = SemanticRouter()
     semanticRouter.buid_ref_embed_matrix()
 
@@ -110,13 +106,3 @@ if __name__ == "__main__":
     query = "can you tell me about the treatments for Hemolytic Uremic Syndrome in Children."
     intent, score = semanticRouter.route_query(query)
     print(f"Intent: {intent}, Confidence: {score}")
-
-    if intent == "check_weather":
-        pass
-        # check_weather_module(query)
-    elif intent == "book_ticket":
-        pass
-        # book_ticket_module(query)
-    elif intent == "cancel_order":
-        pass
-        # cancel_order_module(query)

@@ -84,8 +84,6 @@ def render():
 
     if submitted:
         if not query: pass
-            # st.warning("❗ Bạn cần nhập câu hỏi.")
-            # return
 
         if not st.session_state.selected_sample_image and not uploaded_file:
             st.warning("❗ Bạn cần tải ảnh hoặc chọn ảnh mẫu.")

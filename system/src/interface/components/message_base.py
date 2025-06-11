@@ -7,7 +7,6 @@ import sys
 import os
 from dotenv import load_dotenv
 
-# === fix import module
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
 project_root = os.getenv("PROJECT_ROOT")
@@ -49,7 +48,6 @@ def render():
         help="Chọn phương thức phản hồi mong muốn"
     )
 
-    # CSS Styling for Messenger-Like Interface
     st.markdown("""
         <style>
         .chat-container {
@@ -98,7 +96,6 @@ def render():
         </style>
     """, unsafe_allow_html=True)
 
-    # Initialize Session State
     if "chat_sessions" not in st.session_state:
         st.session_state.chat_sessions = {}
 
@@ -107,7 +104,6 @@ def render():
         st.session_state.chat_sessions[new_id] = []
         st.session_state.current_chat_id = new_id
 
-    # Sidebar: Chat History
     st.sidebar.title("🗂️ Chat History")
 
     if st.sidebar.button("➕ New Chat"):
@@ -121,14 +117,8 @@ def render():
         "Select a chat:", chat_ids, index=chat_ids.index(st.session_state.current_chat_id))
     st.session_state.current_chat_id = selected_chat
 
-        # # Chat Title
-        # st.markdown(
-        #     f"<h2 style='text-align: center;'>💬 Chat - {selected_chat}</h2><hr>", unsafe_allow_html=True)
-
-    # Chat Interface
     chat_history = st.session_state.chat_sessions[selected_chat]
 
-    # Display chat history
     st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     for msg in chat_history:
         sender = msg["role"]
@@ -149,7 +139,6 @@ def render():
             """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # tesst questions
     st.markdown("#### 💡 Try with sample questions:")
     sample_questions = [
         "What is dengue fever, what are its symptoms, how can it be diagnosed, what is the treatment, and what are the complications it leaves behind?",

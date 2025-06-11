@@ -85,7 +85,6 @@ class Atrous_Spatial_Pyramid_Pooling(nn.Module):
                 in_channels=in_channles, out_channels=out_channles,
                 kernel_size=1, stride=1, padding=0, dilation=1, bias=False),
             nn.LayerNorm([out_channles, 1, 1]),
-            # nn.BatchNorm2d(256),
             nn.ReLU(inplace=True)
         )
 

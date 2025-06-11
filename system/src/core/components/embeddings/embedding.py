@@ -21,16 +21,6 @@ class Embedding:
                   content: Union[str, List[str]],
                   batch_size: int = 32
                   ) -> Union[List[float], List[List[float]]]:
-        """
-        Tạo embedding từ nội dung văn bản. Hỗ trợ cả 1 chuỗi (str) hoặc danh sách các chuỗi (List[str]).
-
-        Args:
-            content (str or List[str]): Văn bản đầu vào
-
-        Returns:
-            List[float] nếu đầu vào là 1 chuỗi
-            List[List[float]] nếu đầu vào là list chuỗi
-        """
 
         try:
             if isinstance(content, str):

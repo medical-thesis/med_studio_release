@@ -19,16 +19,13 @@ def render():
     total_items = len(filtered_medicals)
     total_pages = max(math.ceil(total_items / ITEMS_PER_PAGE), 1)
 
-    # Save page state
     if "current_page" not in st.session_state:
         st.session_state.current_page = 1
 
-    # List on current page
     start_idx = (st.session_state.current_page - 1) * ITEMS_PER_PAGE
     end_idx = start_idx + ITEMS_PER_PAGE
     current_page_meds = filtered_medicals[start_idx:end_idx]
 
-    # Display a 3 column list
     selected_medical = None
     if current_page_meds:
         st.markdown("### 📋 List of diseases:")

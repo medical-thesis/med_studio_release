@@ -67,7 +67,6 @@ class ElasticsearchManager:
                 client_info = self.es.info()
                 print('Connected to Elasticsearch!')
                 print(client_info.body)
-                # self.create_index()
             else:
                 print("Failed to connect to Elasticsearch server.")
                 self.es = None
@@ -82,7 +81,7 @@ class ElasticsearchManager:
         self.index_name = index_name
         self.index_config = index_config
 
-    def get_indices(self) -> Dict[str, Any] | None:  # check output return
+    def get_indices(self) -> Dict[str, Any] | None:
         """
         beta
         """

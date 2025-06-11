@@ -2,12 +2,14 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from calculator import ZeroShot
-from calculator import KNNClassifier, LogisticRegressionClassifier, SVMClassifier
+from system.src.core.components.calculator.zero_shot_classification import ZeroShotClassifier
+from system.src.core.components.calculator.svm import SVMClassifier
+from system.src.core.components.calculator.logistic_regression import LogisticRegression
+from system.src.core.components.calculator.knn import KNNClassifier
 import pandas as pd
 
 class EvaluateCategory:
-    def __init__(self, model_classifier: ZeroShot | KNNClassifier | LogisticRegressionClassifier | SVMClassifier,
+    def __init__(self, model_classifier: ZeroShotClassifier | KNNClassifier | LogisticRegression | SVMClassifier,
                  data: pd.DataFrame) -> None:
         self.model_classifier = model_classifier
         self.data = data
@@ -15,7 +17,7 @@ class EvaluateCategory:
         self.categories = self.data['focus_area'].unique().tolist()
     
     def predict(self, question: str) -> str:
-        if not isinstance(self.model_classifier, ZeroShot):
+        if not isinstance(self.model_classifier, ZeroShotClassifier):
             return self.model_classifier.predict(question)
         else:
             return self.model_classifier.zero_shot(question, self.categories)
@@ -47,9 +49,9 @@ if __name__ == "__main__":
     from calculator import ZeroShot
     
     Embedding = Embedding(embedding_model_name="all-MiniLM-L6-v2")
-    # model_classifier = ZeroShot(embedding= Embedding)
+    # model_classifier = ZeroShotClassifier(embedding= Embedding)
     # model_classifier = KNNClassifier(embedding= Embedding, data= data)
-    # model_classifier = LogisticRegressionClassifier(embedding= Embedding, data= data)
+    # model_classifier = LogisticRegression(embedding= Embedding, data= data)
     model_classifier = SVMClassifier(embedding= Embedding, data= data)
     
     evaluator = EvaluateCategory(model_classifier= model_classifier, data= dt)

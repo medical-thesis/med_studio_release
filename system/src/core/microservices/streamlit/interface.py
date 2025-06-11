@@ -13,16 +13,14 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 
-# from system.core.src.db.elasticsearch.retriever import ElasticsearchRetriever
-from system.core.src.db.elasticsearch.retriever_cloud import ElasticsearchRetriever
-from system.core.src.db.qdrant.retriever import ListRetriever
+from system.src.core.components.db.elasticsearch.retriever import ElasticsearchRetriever
+from system.src.core.components.db.qdrant.retriever import QdrantRetriever
 
 
 # ========== config for multilingual ==========
 LANGUAGES = {
     "en": {
         "title": "Medical Retrieval - Q&A System",
-        # "title": "Medical Retrieval System // Medical Q&A Retrieval",
         "students": "Students: Minh-Trieu, Truong & Quang-Khai, Hoang",
         "supervisor": "Supervisor: Professor Van-Dung, Hoang",
         "index": "Index",
@@ -73,13 +71,6 @@ def display_item(item, language):
     st.markdown(f"**{texts['score']}:** {item['Score']:.4f}")
     st.markdown("---")
 
-    # st.markdown(f"**Index:** {item['Index']}")
-    # st.markdown(f"**ID:** {item['ID']}")
-    # st.markdown(f"**Origin question:** {item['Question']}")
-    # st.markdown(f"**Origin answer:** {item['Answer']}")
-    # st.markdown(f"**Score:** {item['Score']:.4f}")
-    # st.markdown("---")
-
 
 
 def main():
@@ -123,7 +114,6 @@ def main():
     filtered1 = []
     filtered2 = []
 
-    # logic handle query for Search with elasticsearch
     if query1:
         retriever = ElasticsearchRetriever()
         translated_query = query1
@@ -134,9 +124,8 @@ def main():
 
         filtered1 = retriever.handle_query(query=translated_query)
         
-    # logic handle query for Search with qdrant
     if query2:
-        retriever = ListRetriever()
+        retriever = QdrantRetriever()
         translated_query2 = query2
         if language == "vi":
             translated_query2 = translate(text=query2, src="vi", dest="en")

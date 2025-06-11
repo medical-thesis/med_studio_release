@@ -9,7 +9,6 @@ from elasticsearch import Elasticsearch
 from dotenv import load_dotenv
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
-# === fix import module
 project_root = os.getenv("PROJECT_ROOT")
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
@@ -133,7 +132,6 @@ if not USING_QDRANT:
         client.indices.create(index=INDEX_NAME, body=INDEX_CONFIG)
         print("Index created successfully!")
 
-        # (hiện tại là setup tạm thời, sau này hoàn thiện module này chỗ nào có pd đọc sẽ đọc data từ mongodb database source thay vì csv bằng pandas như hiện tại)
         df = pd.read_csv(
             'E:/source_code/nlp/med_studio/system/dataset/processed/medquad_qa_pairs.csv')
         print(f"\n ---- Dataset overview: \n{df.describe()} ---- \n\n")
@@ -158,7 +156,6 @@ if not USING_QDRANT:
 
 
     if not USING_ELASTIC_CLOUD:
-        # Task 01: Create elasticsearch connection and index
         print("\n\n\n ---- Elasticsearch database service tasks: ---- \n")
         print("\n ---- Task 01: Create elasticsearch connection and index ---- \n")
 
@@ -174,10 +171,6 @@ if not USING_QDRANT:
             index_config=INDEX_CONFIG
         )
 
-        #
-        # ========
-        # Task 2: Read data from source, embedding data and index all data (documents)
-        # (hiện tại là setup tạm thời, sau này hoàn thiện module này chỗ nào có pd đọc sẽ đọc data từ mongodb database source thay vì csv bằng pandas như hiện tại)
         print("\n ---- Task 2: Read data from source, embedding data and index all data (documents) ---- \n")
 
         df = pd.read_csv(

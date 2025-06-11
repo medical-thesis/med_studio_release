@@ -18,7 +18,6 @@ def render():
     )
 
     st.header("💈 Overview about MedStudio")
-    # st.markdown("""---""")
     st.subheader("📬🧬 What is MedStudio?")
     st.markdown("""
     In this research, we developed **MedStudio**, a comprehensive intelligent medical platform that integrates advanced deep learning techniques. At its core, the system leverages the power of:
@@ -56,7 +55,6 @@ def render():
     """)
 
     st.header("📌 Proposed Method")
-    # st.markdown("""---""")
     st.subheader("🧱 System Architecture (Main Modules)")
 
     st.markdown("""
@@ -94,7 +92,6 @@ def render():
 
 
     st.header("🧪 MedStudio Experimental Results")
-    # st.markdown("""---""")
 
     tab1, tab2, tab3, tab4 = st.tabs([
         "QA Module", 

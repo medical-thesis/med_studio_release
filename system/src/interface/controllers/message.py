@@ -123,10 +123,8 @@ class MessageController:
 
                     result_box.error(
                         text,
-                        # unsafe_allow_html=True
                     )
 
-                    # text = ""
                     time.sleep(1.5)
                 result_box.empty()
                 if len(final_queries) < 2:
@@ -140,12 +138,7 @@ class MessageController:
             step_box.info("Retrieving relevant documents...")
             time.sleep(1.5)
 
-            # retriever = ElasticsearchRetriever()
-            # index_name = "medical_records"
-            # context = retriever.handle_query(query=normalized_query)
-            # context = context[0]["Answer"]
 
-            # ====
             retriever = ElasticsearchRetriever()
             index_name = "medical_records"
 
@@ -153,10 +146,9 @@ class MessageController:
             for query in final_queries:
                 results = retriever.handle_query(query=query)
                 results = results[:4]
-                context.extend(results)  # Gộp kết quả từng truy vấn vào context chung
+                context.extend(results) 
             print("\n\nlen context: ", len(context))
 
-            # ===
 
         subheader = st.empty()
         subheader.markdown("📚 The context retrieved is:")
@@ -184,7 +176,6 @@ class MessageController:
         )
 
         instruction_prompt = f'''You are a helpful chatbot. Use only the following pieces of context to answer the question. Don't make up any new information: {context}.'''
-        # print(instruction_prompt)
 
         stream = ollama.chat(
             model=LANGUAGE_MODEL,
@@ -195,7 +186,6 @@ class MessageController:
             stream=True,
         )
 
-        # print the response from the chatbot in real-time
         response = ""
         print('Chatbot response:')
         for chunk in stream:
@@ -214,13 +204,13 @@ class MessageController:
         step_box.markdown(f"Normalized query: {normalized_query}")
         time.sleep(1.5)
 
-        step_box.empty()  # Clear the step box
+        step_box.empty()
         step_box.info("Classify query...")
         classified_query = query_classifier.classify(normalized_query)
         step_box.markdown(f"Classified query: {classified_query}")
         time.sleep(1.5)
 
-        step_box.empty()  # Clear the step box
+        step_box.empty()
         if classified_query == "general":
             step_box.info("General query detected. Generating response...")
             response = query_general.generate(normalized_query)

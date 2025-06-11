@@ -3,7 +3,7 @@ import os
 from elasticsearch import Elasticsearch
 from dotenv import load_dotenv
 
-# === fix import module
+
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
 project_root = os.getenv("PROJECT_ROOT")
@@ -149,10 +149,9 @@ if __name__ == "__main__":
         response = retriever.semantic_search(index_name=index_name,
                                              query=i)
 
-        # print(response)
+
         print("\n\n test: \n")
         print("===============")
         print(f"for sample: \[\"{i}\"\]")
         retriever.pretty_response(response)
-    # print(type(retriever.client))
-    # print(type(response))
+

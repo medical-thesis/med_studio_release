@@ -18,8 +18,6 @@ for index, row in df.iterrows():
         translate(text=row["medical_abstract"])
     ]
     processed_data.append(item)
-    # if index == 20: break
 processed_df = pd.DataFrame(processed_data, columns=["condition_label", "medical_abstract_origin", "medical_abstract_translated"])
 processed_df.to_csv(processed_data_path)
 print("\n\n========= Data after processed: =========")
-# print(processed_data[:5])

@@ -11,7 +11,6 @@ def translate(source: str, target: str, text: str):
 def render():
     st.subheader("🔍 Intelligent medical retrieval and query system")
 
-    # st.markdown("---")
     st.markdown("### 🧪 Sample Queries")
     st.markdown("""
     - What are the symptoms of Glaucoma?  

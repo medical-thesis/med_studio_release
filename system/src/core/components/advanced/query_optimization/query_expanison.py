@@ -3,7 +3,6 @@ import ollama
 from typing import List
 
 class QueryExpansion:
-    # def __init__(self, model: str = 'llama3.2'):
     def __init__(self, model: str = 'gemma3:1b'):
         self.model = model
 
@@ -30,7 +29,6 @@ class QueryExpansion:
             
             Original question: {query}
         """
-        # Provide the five alternatives, each on a new line.
         return self._get_response(prompt)
 
     def query_expansion(self, query: str = "Can you explain what causes migraine, how it can be diagnosed, and what complications it leads to?") -> List[str]:
@@ -87,10 +85,7 @@ class QueryExpansion:
             print(chunk['message']['content'], end='', flush=True)
             response += chunk['message']['content']
 
-        # print("\n\n=====\n[Origin] Final response:\n", response)
         print("\n\n=====\n[Converted to array] Final response 2:\n", ast.literal_eval(response), "\n\n")
-        # print("\n\n=====\n[Type] Final response 3:\n", type(ast.literal_eval(response)))
-        # print("\n\n=====\n[Type origin] Final response 4:\n", type(response))
         return ast.literal_eval(response)
 
 
@@ -98,7 +93,7 @@ if __name__ == "__main__":
     expander = QueryExpansion()
     
     try:
-        # Run decomposition (query expansion)
+
         queries = expander.query_expansion("What is dengue fever, what are its symptoms, how can it be diagnosed, what is the treatment, and what are the complications it leaves behind?")
         index = 0
         for query in queries:
@@ -107,8 +102,6 @@ if __name__ == "__main__":
     except Exception as e:
         print("\n\nerror in query_expansion: \n\n", {e})
 
-    # Run rephrasing (query augmentation)
-    # expander.query_augmentation("What causes diabetes?")
 
 
 

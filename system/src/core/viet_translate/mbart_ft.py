@@ -11,7 +11,6 @@ class MBartFT():
         model = AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path="E:/source_code/nlp/med_studio_core/src/core/machine_translation/fine_tuning/content/out/ft")
 
-        # translate vindi to French
         tokenizer.src_lang = "vi-VN"
         tokenizer.tgt_lang = "en-XX"
         encoded_vi = tokenizer(text, return_tensors="pt")
@@ -26,4 +25,3 @@ if __name__ == "__main__":
     text = "Ứng dụng một số phần mềm phân tích mã vạch DNA để định danh cây dược liệu"
     translated = MBartFT().translate(text=text)
     print("translated: ", translated)
-    # expected output: Application of some dna barcode analysis software to identify medicinal plants

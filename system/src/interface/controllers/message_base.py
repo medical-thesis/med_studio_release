@@ -6,7 +6,6 @@ import os
 from elasticsearch import Elasticsearch
 from dotenv import load_dotenv
 
-# === fix import module
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
 project_root = os.getenv("PROJECT_ROOT")
@@ -84,11 +83,6 @@ class MessageController:
         retriever = ElasticsearchRetriever()
         index_name = "medical_records"
         context = retriever.handle_query(query=input_query)
-        # context = context[0]["Answer"]
-
-            # ====
-
-            # ===
 
         subheader = st.empty()
         subheader.markdown("📚 The context retrieved is:")
@@ -116,7 +110,6 @@ class MessageController:
         )
 
         instruction_prompt = f'''You are a helpful chatbot. Use only the following pieces of context to answer the question. Don't make up any new information: {context}.'''
-        # print(instruction_prompt)
 
         stream = ollama.chat(
             model=LANGUAGE_MODEL,
@@ -127,7 +120,6 @@ class MessageController:
             stream=True,
         )
 
-        # print the response from the chatbot in real-time
         response = ""
         print('Chatbot response:')
         for chunk in stream:

@@ -3,8 +3,7 @@ from typing import Literal
 
 
 class VinaiTranslator():
-    """_summary_
-    """
+
     def __init__(
             self,
     ): pass

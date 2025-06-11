@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
-# === fix import module
 project_root = os.getenv("PROJECT_ROOT")
 
 if project_root not in sys.path:
@@ -56,7 +55,6 @@ class QdrantManager:
         except Exception as e:
             print(f"Failed to close the Qdrant connection: {e}")
 
-    # ====
 
     def has_collection(self, collection_name: str) -> bool:
         collections = self.client.get_collections().collections
