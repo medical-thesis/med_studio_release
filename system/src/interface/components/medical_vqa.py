@@ -22,12 +22,12 @@ def load_model_v1(
     return model, processor
 
 def load_model_v2(
-        model_path='E:/trieutm/med_studio/system/src/interface/finetuned_models/med_vqa/model',
-        processor_path='E:/trieutm/med_studio/system/src/interface/finetuned_models/med_vqa/processor',
+        model_path='system/src/interface/finetuned_models/med_vqa/model',
+        processor_path='system/src/interface/finetuned_models/med_vqa/processor',
         device='cpu'
         ):
-    model = BlipForQuestionAnswering.from_pretrained(pretrained_model_name_or_path=model_path)
-    processor = BlipProcessor.from_pretrained(pretrained_model_name_or_path=processor_path)
+    model = BlipForQuestionAnswering.from_pretrained(model_path)
+    processor = BlipProcessor.from_pretrained(processor_path)
     model.to(device)
     return model, processor
 
