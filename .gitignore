@@ -53,7 +53,7 @@ storage/deeplabv3_plus_pretrained_model_isic_2018.pth.tar
 
 storage/resnet18_isic2018_5_epochs.pth
 
-storage/ISIC2018_Task3_Training_Input
+# storage/ISIC2018_Task3_Training_Input
 
 storage/resnet18_isic2018_5_epochs.zip
 
