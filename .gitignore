@@ -30,6 +30,7 @@ app2.py
 # system/src/core/microservices/streamlit
 
 system/src/core/microsservices/streamlit/interface.py
+system\src\core\microservices\streamlit\interface.py
 system/src/core/microservices/streamlit/interface_cloud.py
 
 system/src/frontend/db.json
@@ -69,3 +70,10 @@ system/src/core/config/.env
 
 # system/src
 system\src\core
+
+eval_v2.ipynb
+eval.ipynb
+
+data_sample_50_predicted.csv
+
+eval_v1.csv
