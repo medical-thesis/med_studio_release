@@ -158,7 +158,7 @@ def render():
         "What is high blood pressure, what are its causes, how can it be detected early, and what are the effective treatment methods available today?",
         "Explain machine learning in simple terms.",
         "What is cardiovascular disease, what are the risk factors, and how can we improve heart health?"
-        "How does a blockchain work?"
+        " How does a blockchain work?"
     ]
 
     for question in sample_questions:
