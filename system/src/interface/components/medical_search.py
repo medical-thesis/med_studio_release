@@ -11,9 +11,16 @@ def render():
     dataset = MedicalSearchController().dataset
     
     st.text("🔍 Search for medical informations")
-
+    
+    if "previous_query" not in st.session_state:
+        st.session_state.previous_query = ""
+        
     query = st.text_input("Enter disease name", "")
-
+    
+    if query != st.session_state.previous_query:
+        st.session_state.current_page = 1
+        st.session_state.previous_query = query
+        
     all_medicals = MedicalSearchController().get_medical_list()
     filtered_medicals = [med for med in all_medicals if query.lower() in med.lower()]
     total_items = len(filtered_medicals)

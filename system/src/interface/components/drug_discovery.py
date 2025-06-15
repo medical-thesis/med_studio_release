@@ -9,8 +9,15 @@ def render():
     ITEMS_PER_PAGE = DrugDiscoveryController().items_per_page
     
     st.text("🔍 Search for drug information")
-
+    
+    if "previous_query" not in st.session_state:
+        st.session_state.previous_query = ""
+        
     query = st.text_input("Enter drug name", "")
+    
+    if query != st.session_state.previous_query:
+        st.session_state.current_page = 1
+        st.session_state.previous_query = query
 
     all_medicines = DrugDiscoveryController().get_medicine_list()
     filtered_medicines = [med for med in all_medicines if query.lower() in med.lower()]
