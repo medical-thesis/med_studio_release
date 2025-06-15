@@ -5,8 +5,6 @@ def render():
     st.subheader("🏠 Home")
     st.subheader("MedStudio | Comprehensive Intelligent Medical Platform")
 
-    import streamlit as st
-
     with open("system/src/interface/draft_manuscript_v2.pdf", "rb") as f:
         pdf_data = f.read()
 

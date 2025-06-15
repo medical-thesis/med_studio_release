@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title="MedStudio - Comprehensive Intelligent Medical Platform", layout="wide")
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -16,7 +18,6 @@ if project_root not in sys.path:
 
 from system.src.interface.components import chat_with_image, home, medical_vqa, query, message, translate, drug_discovery, medical_search, message_base
 
-st.set_page_config(page_title="MedStudio - Comprehensive Intelligent Medical Platform", layout="wide")
 
 st.sidebar.title("📬🧬 MedStudio")
 page = st.sidebar.radio("Go to", ["🏠 Home", "💬 Message", "💬 Basic message", "🔍 Medical retrieval", "🌐 Medical translate", "💬 Message with image", "🎰 Medical VQA", "💊 Drug discovery", "🩺 Medical search"])
