@@ -7,6 +7,7 @@ import sys
 import os
 from dotenv import load_dotenv
 
+# === fix import module
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
 project_root = os.getenv("PROJECT_ROOT")
@@ -18,14 +19,15 @@ from system.src.interface.controllers.message_base import MessageController
 
 def response_generator(query: str, task: str):
     if task == "try_with_llama":
-        response = MessageController().get_responses(input_query=query)
+        response, docs = MessageController().get_responses(input_query=query)
         print("\n\n herre get reponse done successfull")
     elif task == "try_with_gemini":
-        response = MessageController().get_response_gemini(input_query=query)
+        response, docs = MessageController().get_response_gemini(input_query=query)
         print("\n\n herre get reponse gemini done successfull")
     else:
-        response = "[❌ Không xác định tác vụ]"
+        response, docs = "[❌ Không xác định tác vụ]", []
 
+    st.session_state["docs"] = docs
     buffer = ""
     for char in response:
         buffer += char
@@ -110,6 +112,7 @@ def render():
         new_id = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         st.session_state.chat_sessions[new_id] = []
         st.session_state.current_chat_id = new_id
+        st.session_state.pop("docs", None)
         st.rerun()
 
     chat_ids = sorted(st.session_state.chat_sessions.keys(), reverse=True)
@@ -117,12 +120,14 @@ def render():
         "Select a chat:", chat_ids, index=chat_ids.index(st.session_state.current_chat_id))
     st.session_state.current_chat_id = selected_chat
 
+
     chat_history = st.session_state.chat_sessions[selected_chat]
 
     st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     for msg in chat_history:
         sender = msg["role"]
         content = msg["content"]
+
         if sender == "user":
             st.markdown(f"""
             <div class="msg-row user">
@@ -137,6 +142,21 @@ def render():
                 <div class="chat-bubble bot-msg">{content}</div>
             </div>
             """, unsafe_allow_html=True)
+
+            if "docs" in msg and msg["docs"]:
+                with st.expander("📄 Tham khảo thêm tài liệu liên quan"):
+                    for i, doc in enumerate(msg["docs"], 1):
+                        st.markdown(f"""
+                        <div style="font-size: 13px; line-height: 1.4">
+                            <b>Tài liệu #{i}</b><br>
+                            • <b>Câu hỏi:</b> {doc.get("Question", "")}<br>
+                            • <b>Câu trả lời:</b> {doc.get("Answer", "")}<br>
+                            • <b>Nguồn:</b> {doc.get("Source", "")}<br>
+                            • <b>Chuyên mục:</b> {doc.get("Category", "")}<br>
+                            • <b>Score:</b> <code>{round(doc.get("Score", 0), 4)}</code><br>
+                            <hr style="margin-top: 6px; margin-bottom: 6px">
+                        </div>
+                        """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("#### 💡 Try with sample questions:")
@@ -146,8 +166,8 @@ def render():
         "Can you explain what causes migraine, how it can be diagnosed, and what complications it leads to?",
         "What is high blood pressure, what are its causes, how can it be detected early, and what are the effective treatment methods available today?",
         "Explain machine learning in simple terms.",
-        "What is cardiovascular disease, what are the risk factors, and how can we improve heart health?"
-        " How does a blockchain work?"
+        "What is cardiovascular disease, what are the risk factors, and how can we improve heart health?",
+        "How does a blockchain work?"
     ]
 
     for question in sample_questions:
@@ -158,7 +178,11 @@ def render():
                 for word in response_generator(question, task):
                     response_text += word
                 time.sleep(0.2)
-            chat_history.append({"role": "bot", "content": response_text})
+            bot_message = {"role": "bot", "content": response_text}
+            if "docs" in st.session_state:
+                bot_message["docs"] = st.session_state["docs"]
+            chat_history.append(bot_message)
+            
             st.rerun()
 
 
@@ -170,6 +194,10 @@ def render():
             for word in response_generator(prompt, task):
                 response_text += word
             time.sleep(0.2)
-        chat_history.append({"role": "bot", "content": response_text})
+        
+        bot_message = {"role": "bot", "content": response_text}
+        if "docs" in st.session_state:
+            bot_message["docs"] = st.session_state["docs"]
+        chat_history.append(bot_message)
 
-        st.rerun()
+        # st.rerun()

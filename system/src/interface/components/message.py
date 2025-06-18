@@ -19,14 +19,15 @@ from system.src.interface.controllers.message import MessageController
 
 def response_generator(query: str, task: str):
     if task == "try_with_llama":
-        response = MessageController().get_responses(input_query=query)
+        response, docs = MessageController().get_responses(input_query=query)
         print("\n\n herre get reponse done successfull")
     elif task == "try_with_gemini":
-        response = MessageController().get_response_gemini(input_query=query)
+        response, docs = MessageController().get_response_gemini(input_query=query)
         print("\n\n herre get reponse gemini done successfull")
     else:
-        response = "[❌ Không xác định tác vụ]"
+        response, docs = "[❌ Không xác định tác vụ]", []
 
+    st.session_state["docs"] = docs
     buffer = ""
     for char in response:
         buffer += char
@@ -38,7 +39,6 @@ def response_generator(query: str, task: str):
         
     print("\n\n done reponse")
 
-
 def render():
     st.subheader("📬 Messenger")
 
@@ -49,7 +49,6 @@ def render():
         help="Chọn phương thức phản hồi mong muốn"
     )
 
-    # CSS Styling for Messenger-Like Interface
     st.markdown("""
         <style>
         .chat-container {
@@ -98,7 +97,6 @@ def render():
         </style>
     """, unsafe_allow_html=True)
 
-    # Initialize Session State
     if "chat_sessions" not in st.session_state:
         st.session_state.chat_sessions = {}
 
@@ -107,13 +105,13 @@ def render():
         st.session_state.chat_sessions[new_id] = []
         st.session_state.current_chat_id = new_id
 
-    # Sidebar: Chat History
     st.sidebar.title("🗂️ Chat History")
 
     if st.sidebar.button("➕ New Chat"):
         new_id = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         st.session_state.chat_sessions[new_id] = []
         st.session_state.current_chat_id = new_id
+        st.session_state.pop("docs", None)
         st.rerun()
 
     chat_ids = sorted(st.session_state.chat_sessions.keys(), reverse=True)
@@ -121,18 +119,14 @@ def render():
         "Select a chat:", chat_ids, index=chat_ids.index(st.session_state.current_chat_id))
     st.session_state.current_chat_id = selected_chat
 
-        # # Chat Title
-        # st.markdown(
-        #     f"<h2 style='text-align: center;'>💬 Chat - {selected_chat}</h2><hr>", unsafe_allow_html=True)
 
-    # Chat Interface
     chat_history = st.session_state.chat_sessions[selected_chat]
 
-    # Display chat history
     st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     for msg in chat_history:
         sender = msg["role"]
         content = msg["content"]
+
         if sender == "user":
             st.markdown(f"""
             <div class="msg-row user">
@@ -147,16 +141,33 @@ def render():
                 <div class="chat-bubble bot-msg">{content}</div>
             </div>
             """, unsafe_allow_html=True)
+
+            if "docs" in msg and msg["docs"]:
+                with st.expander("📄 Tham khảo thêm tài liệu liên quan"):
+                    for i, doc in enumerate(msg["docs"], 1):
+                        st.markdown(f"""
+                        <div style="font-size: 13px; line-height: 1.4">
+                            <b>Tài liệu #{i}</b><br>
+                            • <b>Câu hỏi:</b> {doc.get("Question", "")}<br>
+                            • <b>Câu trả lời:</b> {doc.get("Answer", "")}<br>
+                            • <b>Nguồn:</b> {doc.get("Source", "")}<br>
+                            • <b>Chuyên mục:</b> {doc.get("Category", "")}<br>
+                            • <b>Score:</b> <code>{round(doc.get("Score", 0), 4)}</code><br>
+                            <hr style="margin-top: 6px; margin-bottom: 6px">
+                        </div>
+                        """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # tesst questions
     st.markdown("#### 💡 Try with sample questions:")
     sample_questions = [
         "What is dengue fever, what are its symptoms, how can it be diagnosed, what is the treatment, and what are the complications it leaves behind?",
         "What is the capital of France?",
         "Can you explain what causes migraine, how it can be diagnosed, and what complications it leads to?",
-        "What is high blood pressure, what are its causes, how can it be detected early, and what are the effective treatment methods available today?",
+        "What is breast cancer, what causes it, what complications can it lead to?",
+        "What is depression, how should it be treated, what are the symptoms?",
+        "What is kidney stone disease, is kidney stone disease dangerous, how should it be treated, are there any complications?",
         "Explain machine learning in simple terms.",
+        "What is high blood pressure, what are its causes, how can it be detected early, and what are the effective treatments?",
         "What is cardiovascular disease, what are the risk factors, and how can we improve heart health?"
         " How does a blockchain work?"
     ]
@@ -169,7 +180,11 @@ def render():
                 for word in response_generator(question, task):
                     response_text += word
                 time.sleep(0.2)
-            chat_history.append({"role": "bot", "content": response_text})
+            bot_message = {"role": "bot", "content": response_text}
+            if "docs" in st.session_state:
+                bot_message["docs"] = st.session_state["docs"]
+            chat_history.append(bot_message)
+            
             st.rerun()
 
 
@@ -181,6 +196,10 @@ def render():
             for word in response_generator(prompt, task):
                 response_text += word
             time.sleep(0.2)
-        chat_history.append({"role": "bot", "content": response_text})
+        
+        bot_message = {"role": "bot", "content": response_text}
+        if "docs" in st.session_state:
+            bot_message["docs"] = st.session_state["docs"]
+        chat_history.append(bot_message)
 
-        st.rerun()
+        # st.rerun()

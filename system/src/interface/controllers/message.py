@@ -20,6 +20,7 @@ from system.src.core.components.db.elasticsearch.retriever import ElasticsearchR
 from system.src.core.components.api.api_keys import APIKeyManager
 
 from system.src.core.components.db.qdrant.manager import QdrantManager
+from system.src.core.components.db.qdrant.retriever import QdrantRetriever
 from system.src.core.components.conversational.memory.chat_history import ChatHistory
 
 chathistory = ChatHistory()
@@ -34,6 +35,8 @@ manager = QdrantManager(
     url=os.getenv("QDRANT_URL"),
     api_key=os.getenv("QDRANT_API_KEY"),
 )
+
+qdrant_retriever = QdrantRetriever()
 
 from system.src.core.components.api.api_keys import APIKeyManager
 
@@ -123,8 +126,10 @@ class MessageController:
 
                     result_box.error(
                         text,
+                        # unsafe_allow_html=True
                     )
 
+                    # text = ""
                     time.sleep(1.5)
                 result_box.empty()
                 if len(final_queries) < 2:
@@ -138,7 +143,12 @@ class MessageController:
             step_box.info("Retrieving relevant documents...")
             time.sleep(1.5)
 
+            # retriever = ElasticsearchRetriever()
+            # index_name = "medical_records"
+            # context = retriever.handle_query(query=normalized_query)
+            # context = context[0]["Answer"]
 
+            # ====
             retriever = ElasticsearchRetriever()
             index_name = "medical_records"
 
@@ -149,6 +159,7 @@ class MessageController:
                 context.extend(results) 
             print("\n\nlen context: ", len(context))
 
+            # ===
 
         subheader = st.empty()
         subheader.markdown("📚 The context retrieved is:")
@@ -176,6 +187,7 @@ class MessageController:
         )
 
         instruction_prompt = f'''You are a helpful chatbot. Use only the following pieces of context to answer the question. Don't make up any new information: {context}.'''
+        # print(instruction_prompt)
 
         stream = ollama.chat(
             model=LANGUAGE_MODEL,
@@ -186,6 +198,7 @@ class MessageController:
             stream=True,
         )
 
+        # print the response from the chatbot in real-time
         response = ""
         print('Chatbot response:')
         for chunk in stream:
@@ -193,7 +206,7 @@ class MessageController:
             response += chunk['message']['content']
 
         print("\n\n\ Generating response ... donen, prepapre return \n\n\n")
-        return str(response)
+        return str(response), results
 
     def get_response_gemini(self, input_query: str) -> str:
 
@@ -202,15 +215,17 @@ class MessageController:
         step_box.info("Normalize query...")
         normalized_query = query_normalization.normalize(input_query)
         step_box.markdown(f"Normalized query: {normalized_query}")
+        print(f"Normalized query: {normalized_query}")
         time.sleep(1.5)
 
-        step_box.empty()
+        step_box.empty()  # Clear the step box
         step_box.info("Classify query...")
         classified_query = query_classifier.classify(normalized_query)
         step_box.markdown(f"Classified query: {classified_query}")
+        print(f"Classified query: {classified_query}")
         time.sleep(1.5)
 
-        step_box.empty()
+        step_box.empty()  # Clear the step box
         if classified_query == "general":
             step_box.info("General query detected. Generating response...")
             response = query_general.generate(normalized_query)
@@ -250,6 +265,10 @@ class MessageController:
                 limit=5,
                 with_payload=True,
             )
+            
+            # retriever = qdrant_retriever.handle_query(
+            #     query= normalized_query
+            # )
         else:
             step_box.info("Retrieving relevant documents...")
             retriever = manager.semantic_search(
@@ -257,6 +276,41 @@ class MessageController:
                 query=normalized_query,
                 top_k=5,
             )
+            
+        ######
+        
+        lst_docs = []
+        
+        index = 0
+
+        for doc in retriever:
+            index += 1
+            print("\n\n", "=" * 20)
+            print(f"Index: {index}")
+            print(f"ID: {doc.id}")
+            print(f"Question: {doc.payload['question']}")
+            print(f"Answer: {doc.payload['answer']}")
+            print(f"Source: {doc.payload['source']}")
+            print(f"Category: {doc.payload['focus_area']}")
+            print(f"Score: {doc.score}")
+            
+
+            lst_docs.append({
+                "Index": index,
+                "ID": doc.id,
+                "Question": doc.payload['question'],
+                "Answer": doc.payload['answer'],
+                "Source": doc.payload['source'],
+                "Category": doc.payload['focus_area'],
+                "Score": doc.score
+            })
+        
+        print("\n\n", "=" * 20)
+        print(lst_docs)
+        print("\n\n", "=" * 20)
+        
+        ######
+        
         context = "\n".join(
             [f"- {doc.payload['question']} {doc.payload['answer']}" for doc in retriever]
         )
@@ -286,4 +340,4 @@ class MessageController:
             "query": input_query,
             "response": response
         })
-        return response
+        return response, lst_docs

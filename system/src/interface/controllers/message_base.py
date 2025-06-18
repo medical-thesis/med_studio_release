@@ -6,6 +6,7 @@ import os
 from elasticsearch import Elasticsearch
 from dotenv import load_dotenv
 
+# === fix import module
 load_dotenv(dotenv_path="system/src/core/config/.env")
 
 project_root = os.getenv("PROJECT_ROOT")
@@ -82,7 +83,13 @@ class MessageController:
 
         retriever = ElasticsearchRetriever()
         index_name = "medical_records"
-        context = retriever.handle_query(query=input_query)
+        results = retriever.handle_query(query=input_query)
+        context = results
+        # context = context[0]["Answer"]
+
+            # ====
+
+            # ===
 
         subheader = st.empty()
         subheader.markdown("📚 The context retrieved is:")
@@ -110,6 +117,7 @@ class MessageController:
         )
 
         instruction_prompt = f'''You are a helpful chatbot. Use only the following pieces of context to answer the question. Don't make up any new information: {context}.'''
+        # print(instruction_prompt)
 
         stream = ollama.chat(
             model=LANGUAGE_MODEL,
@@ -120,6 +128,7 @@ class MessageController:
             stream=True,
         )
 
+        # print the response from the chatbot in real-time
         response = ""
         print('Chatbot response:')
         for chunk in stream:
@@ -127,7 +136,7 @@ class MessageController:
             response += chunk['message']['content']
 
         print("\n\n\ Generating response ... donen, prepapre return \n\n\n")
-        return str(response)
+        return str(response), context
 
     def get_response_gemini(self, input_query: str) -> str:
 
@@ -139,6 +148,42 @@ class MessageController:
             query=input_query,
             top_k=5,
         )
+                    
+        ######
+        
+        lst_docs = []
+        
+        index = 0
+
+        for doc in retriever:
+            index += 1
+            print("\n\n", "=" * 20)
+            print(f"Index: {index}")
+            print(f"ID: {doc.id}")
+            print(f"Question: {doc.payload['question']}")
+            print(f"Answer: {doc.payload['answer']}")
+            print(f"Source: {doc.payload['source']}")
+            print(f"Category: {doc.payload['focus_area']}")
+            print(f"Score: {doc.score}")
+            
+
+            lst_docs.append({
+                "Index": index,
+                "ID": doc.id,
+                "Question": doc.payload['question'],
+                "Answer": doc.payload['answer'],
+                "Source": doc.payload['source'],
+                "Category": doc.payload['focus_area'],
+                "Score": doc.score
+            })
+        
+        print("\n\n", "=" * 20)
+        print(lst_docs)
+        print("\n\n", "=" * 20)
+        
+        ######
+        
+
         context = "\n".join(
             [f"- {doc.payload['question']} {doc.payload['answer']}" for doc in retriever]
         )
@@ -168,4 +213,5 @@ class MessageController:
             "query": input_query,
             "response": response
         })
-        return response
+        return response, lst_docs
+        # return response
