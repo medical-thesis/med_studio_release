@@ -72,7 +72,7 @@ def render():
     else:
         model, processor = load_model_v2(device=device)    
 
-    option = st.selectbox("Chọn ảnh mẫu từ kho dữ liệu:", list(range(10)))
+    option = st.selectbox("Chọn ảnh mẫu từ kho dữ liệu:", list(range(500)))
     sample = examples[option]
     image = sample["image"].convert("RGB")
     question = sample["question"]

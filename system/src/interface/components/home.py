@@ -5,13 +5,13 @@ def render():
     st.subheader("🏠 Home")
     st.subheader("MedStudio | Comprehensive Intelligent Medical Platform")
 
-    with open("system/src/interface/draft_manuscript_v2.pdf", "rb") as f:
+    with open("system/src/interface/draft_manuscript_v4.pdf", "rb") as f:
         pdf_data = f.read()
 
     st.download_button(
         label="📄 View draft manuscript",
         data=pdf_data,
-        file_name="system/src/interface/draft_manuscript_v2.pdf",
+        file_name="system/src/interface/draft_manuscript_v4.pdf",
         mime="application/pdf"
     )
 
@@ -185,3 +185,76 @@ def render():
             ]
         })
         st.line_chart(epoch_data.set_index("Epoch"))
+        
+    st.header("📑 Medical Machine Translation Experimental Results")
+    
+    tab_names = [  
+            "VietAI/envit5-translation - 63 steps",
+            "our-team/envit5-translation-fine-tuning/checkpoint-2500 - 63 steps",
+            "our-team/envit5-translation-fine-tuning/checkpoint-7500 - 63 steps" ,
+            "facebook/mbart-large-50-many-to-many-mmt - 5 steps",
+            "our-team/mbart-large-50-many-to-many-mmt-finetuned-vi-to-en - 5 steps",
+            "our-team/mbart-large-50-many-to-many-mmt-finetuned-vi-to-en - 63 steps",
+        ]
+    
+    select_tab = st.selectbox("Select a translation model to view results:", tab_names)
+    
+    if select_tab == tab_names[0]:
+        st.subheader("VietAI/envit5-translation")
+        st.metric("Number of test samples (Q&A pair)", 250)
+        st.metric("SacreBLEU Score", 31.26)
+        st.metric("Number of test steps", 63)
+        st.markdown("**Sample Results:**")
+        st.markdown("• Original (VI): Nghiên cứu đặc điểm lâm sàng, cận lâm sàng bệnh nhân viêm tai ứ dịch trên viêm V.A tại Khoa Tai mũi họng - Bệnh viện Trung ương Thái Nguyên")
+        st.markdown("• Predicted (EN): en: To study the clinical and paraclinical characteristics of patients with otitis media on adenoiditis at the Department of Otorhinolaryngology, Thai Nguyen Central Hospital.")
+        st.markdown("• Actual (EN): To evaluate clinical, subclinical symptoms of patients with otitis media with effusion and V.a at otorhinolaryngology department – Thai Nguyen national hospital")
+    
+    if select_tab == tab_names[1]:
+        st.subheader("Model: our-team/envit5-translation-fine-tuning/checkpoint-2500")
+        st.metric("Number of test samples (Q&A pair)", 250)
+        st.metric("SacreBLEU Score", 42.67)
+        st.metric("Number of test steps", 63)
+        st.markdown("**Sample Results:**")
+        st.markdown("• Original (VI): Nghiên cứu đặc điểm lâm sàng, cận lâm sàng bệnh nhân viêm tai ứ dịch trên viêm V.A tại Khoa Tai mũi họng - Bệnh viện Trung ương Thái Nguyên")
+        st.markdown("• Predicted (EN): en: Study on clinical and subclinical characteristics of patients with otitis media on adenoiditis at the Department of Otolaryngology - Thai Nguyen National Hospital")
+        st.markdown("• Actual (EN): To evaluate clinical, subclinical symptoms of patients with otitis media with effusion and V.a at otorhinolaryngology department – Thai Nguyen national hospital")
+        
+    if select_tab == tab_names[2]:
+        st.subheader("Model: our-team/envit5-translation-fine-tuning/checkpoint-7500")
+        st.metric("Number of test samples (Q&A pair)", 250)
+        st.metric("SacreBLEU Score", 49.07)
+        st.metric("Number of test steps", 63)
+        st.markdown("**Sample Results:**")
+        st.markdown("• Original (VI): Nghiên cứu đặc điểm lâm sàng, cận lâm sàng bệnh nhân viêm tai ứ dịch trên viêm V.A tại Khoa Tai mũi họng - Bệnh viện Trung ương Thái Nguyên")
+        st.markdown("• Predicted (EN): en: Study on clinical and subclinical characteristics of patients with otitis media with effusion and V.A at the Department of Otolaryngology - Thai Nguyen National Hospital")
+        st.markdown("• Actual (EN): To evaluate clinical, subclinical symptoms of patients with otitis media with effusion and V.a at otorhinolaryngology department – Thai Nguyen national hospital")
+    
+    if select_tab == tab_names[3]:
+        st.subheader("Model: facebook/mbart-large-50-many-to-many-mmt")
+        st.metric("Number of test samples (Q&A pair)", 20)
+        st.metric("SacreBLEU Score", 27.87)
+        st.metric("Number of test steps", 5)
+        st.markdown("**Sample Results:**")
+        st.markdown("• Original (VI): Nghiên cứu đặc điểm lâm sàng, cận lâm sàng bệnh nhân viêm tai ứ dịch trên viêm V.A tại Khoa Tai mũi họng - Bệnh viện Trung ương Thái Nguyên")
+        st.markdown("• Predicted (EN): vi: Clinical and clinical characteristics research of patients with V.A. inflammation of the throat in the Department of Nail Arts - Central Hospital of Thailand")
+        st.markdown("• Actual (EN): To evaluate clinical, subclinical symptoms of patients with otitis media with effusion and V.a at otorhinolaryngology department – Thai Nguyen national hospital")
+    
+    if select_tab == tab_names[4]:
+        st.subheader("Model: our-team/mbart-large-50-many-to-many-mmt-finetuned-vi-to-en")
+        st.metric("Number of test samples (Q&A pair)", 20)
+        st.metric("SacreBLEU Score", 71.41)
+        st.metric("Number of test steps", 5)
+        st.markdown("**Sample Results:**")
+        st.markdown("• Original (VI): Nghiên cứu đặc điểm lâm sàng, cận lâm sàng bệnh nhân viêm tai ứ dịch trên viêm V.A tại Khoa Tai mũi họng - Bệnh viện Trung ương Thái Nguyên")
+        st.markdown("• Predicted (EN): en: Clinical, paraclinical characteristics of patients with otitis media with effusion and V.a at otorhinolaryngology department - Thai Nguyen national hospital")
+        st.markdown("• Actual (EN): To evaluate clinical, subclinical symptoms of patients with otitis media with effusion and V.a at otorhinolaryngology department – Thai Nguyen national hospital")
+        
+    if select_tab == tab_names[5]:
+        st.subheader("Model: our-team/mbart-large-50-many-to-many-mmt-finetuned-vi-to-en")
+        st.metric("Number of test samples (Q&A pair)", 250)
+        st.metric("SacreBLEU Score", 71.28)
+        st.metric("Number of test steps", 63)
+        st.markdown("**Sample Results:**")
+        st.markdown("• Original (VI): Nghiên cứu đặc điểm lâm sàng, cận lâm sàng bệnh nhân viêm tai ứ dịch trên viêm V.A tại Khoa Tai mũi họng - Bệnh viện Trung ương Thái Nguyên")
+        st.markdown("• Predicted (EN): en: Clinical, paraclinical characteristics of patients with otitis media with effusion and V.a at otorhinolaryngology department - Thai Nguyen national hospital")
+        st.markdown("• Actual (EN): To evaluate clinical, subclinical symptoms of patients with otitis media with effusion and V.a at otorhinolaryngology department – Thai Nguyen national hospital")        
