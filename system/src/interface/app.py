@@ -20,7 +20,7 @@ from system.src.interface.components import chat_with_image, home, medical_vqa, 
 
 
 st.sidebar.title("📬🧬 MedStudio")
-page = st.sidebar.radio("Go to", ["🏠 Home", "💬 Message", "💬 Basic message", "🔍 Medical retrieval", "🌐 Medical translate", "💬 Message with image", "🎰 Medical VQA", "💊 Drug discovery", "🩺 Medical search"])
+page = st.sidebar.radio("Go to", ["🏠 Home", "💬 Advanced message", "💬 Base message", "🔍 Medical retrieval", "🌐 Medical translate", "💬 Message with image", "🎰 Medical VQA", "💊 Drug discovery", "🩺 Medical search"])
 
 def load_styles(styles_path):
     with open(styles_path) as styles:
@@ -33,9 +33,9 @@ load_styles('system/src/interface/app.styles.css')
 
 if page == "🏠 Home":
     home.render()
-elif page == "💬 Message":
+elif page == "💬 Advanced message":
     message.render()
-elif page == "💬 Basic message":
+elif page == "💬 Base message":
     message_base.render()
 elif page == "🔍 Medical retrieval":
     query.render()

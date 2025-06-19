@@ -27,7 +27,7 @@ def response_generator(query: str, task: str):
     else:
         response, docs = "[❌ Không xác định tác vụ]", []
 
-    st.session_state["docs"] = docs
+    st.session_state["docs"] = docs 
     buffer = ""
     for char in response:
         buffer += char
@@ -143,7 +143,7 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-            if "docs" in msg and msg["docs"]:
+            if "docs" in msg and msg["docs"] is not None and len(msg["docs"]) > 0:
                 with st.expander("📄 Tham khảo thêm tài liệu liên quan"):
                     for i, doc in enumerate(msg["docs"], 1):
                         st.markdown(f"""

@@ -103,8 +103,9 @@ class MessageController:
         if classified_query == "general":
             step_box.info("General query detected, so generating response...")
             response = query_general.generate(normalized_query)
-            return response
-
+            return response, []
+        
+        results = []
         if classified_query == "disease_info":
             final_queries = []
             try:
@@ -155,8 +156,8 @@ class MessageController:
             context = []
             for query in final_queries:
                 results = retriever.handle_query(query=query)
-                results = results[:4]
-                context.extend(results) 
+                results = results[:5]
+                context.extend(results)
             print("\n\nlen context: ", len(context))
 
             # ===
@@ -229,7 +230,7 @@ class MessageController:
         if classified_query == "general":
             step_box.info("General query detected. Generating response...")
             response = query_general.generate(normalized_query)
-            return response
+            return response, []
 
         if classified_query == "disease_info":
             step_box.info("Detecting category...")

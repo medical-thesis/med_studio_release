@@ -129,9 +129,9 @@ def render():
             true_class_id, "Không rõ") if true_class_id is not None else "Không rõ"
 
         st.success(
-            f"📌 Kết quả phân loại tổn thương: **{class_name}** (Lớp {class_id})")
+            f"📌 Kết quả phân loại tổn thương => **{class_name}** (class label #{class_id})")
         st.info(
-            f"✅ Ground truth của tổn thương: **{true_class_name}** (Lớp {true_class_id})")
+            f"✅ Ground truth của tổn thương => **{true_class_name}** (class label #{true_class_id})")
 
         st.info("🔍 Đang phân tích hình ảnh...")
         try:

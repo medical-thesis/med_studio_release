@@ -141,8 +141,8 @@ def render():
                 <div class="chat-bubble bot-msg">{content}</div>
             </div>
             """, unsafe_allow_html=True)
-
-            if "docs" in msg and msg["docs"]:
+            
+            if "docs" in msg and msg["docs"] is not None and len(msg["docs"]) > 0:
                 with st.expander("📄 Tham khảo thêm tài liệu liên quan"):
                     for i, doc in enumerate(msg["docs"], 1):
                         st.markdown(f"""

@@ -80,11 +80,12 @@ class MessageController:
         step_box.empty()
         step_box.info("Retrieving relevant documents...")
         time.sleep(1.5)
-
+        
+        results = []
         retriever = ElasticsearchRetriever()
         index_name = "medical_records"
         results = retriever.handle_query(query=input_query)
-        context = results
+        context = results[:5]
         # context = context[0]["Answer"]
 
             # ====
@@ -136,7 +137,7 @@ class MessageController:
             response += chunk['message']['content']
 
         print("\n\n\ Generating response ... donen, prepapre return \n\n\n")
-        return str(response), context
+        return str(response), results
 
     def get_response_gemini(self, input_query: str) -> str:
 
