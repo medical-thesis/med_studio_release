@@ -44,8 +44,12 @@ def render():
         st.text_area("Translated text will appear here:", value=result, height=300, disabled=True)
 
     data = {
-        "col1": ["how are you", "Hi, I think my child might have bronchiolitis. Can you provide more information on this condition?", "c", "d"],
-        "col2": ["bạn có khỏe không", "f", "g", "h"],
+        "col1": ["What are the symptoms of Glaucoma?", 
+                 "How are you today?", 
+                 "Nghiên cứu đặc điểm lâm sàng, cận lâm sàng bệnh nhân viêm tai ứ dịch trên viêm V.A tại Khoa Tai mũi họng - Bệnh viện Trung ương Thái Nguyên", 
+                 "Hi, I think my child might have bronchiolitis. Can you provide more information on this condition?", 
+                 "Hình ảnh nội soi màng nhĩ điển hình là màng nhĩ lõm, màu vàng hoặc có bóng khí."],
+        # "col2": ["bạn có khỏe không", "f", "g", "h"],
     }
 
     df = pd.DataFrame(data)
